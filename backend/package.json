@@ -1,0 +1,13 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "mock database",
+  "scripts": {
+    "start": "json-server --watch db.json"
+  },
+  "author": "olha kostiv",
+  "license": "ISC",
+  "dependencies": {
+    "json-server": "^0.17.0"
+  }
+}

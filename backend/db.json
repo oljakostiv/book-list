@@ -1,0 +1,25 @@
+{
+  "books": [
+    {
+      "title": "Marvel Encyclopedia, New Edition",
+      "author": "Stephen Wiacek",
+      "category": "Comic Book",
+      "ISBN": "1465478906",
+      "id": 1
+    },
+    {
+      "title": "The Hobbit",
+      "author": " Rob Inglis",
+      "category": "Classics",
+      "ISBN": "9780743273565",
+      "id": 2
+    },
+    {
+      "category": "Horror",
+      "title": "Devoted ",
+      "author": "Dean Koontz",
+      "ISBN": "24123345686912",
+      "id": 3
+    }
+  ]
+}
