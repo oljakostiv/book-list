@@ -1,0 +1,20 @@
+{
+  "extends": [
+    "airbnb-base",
+    "plugin:react/recommended"
+  ],
+  "rules": {
+    "indent": ["error", 2],
+    "max-len": ["error", { "code": 180, "ignoreTemplateLiterals": true }],
+    "no-console": ["error", { "allow": ["warn", "error"] }],
+    "import/extensions": 0,
+    "import/no-unresolved": 0,
+    "import/no-extraneous-dependencies": 0,
+    "import/prefer-default-export": 0
+  },
+  "globals": {
+    "document": true,
+    "test": true,
+    "expect": true
+  }
+}
