@@ -8,8 +8,8 @@ const fetchBooks = async () => {
     return data;
 };
 
-const fetchOneBook = async (id: number) => {
-    const { data } = await booksAPI.get(`/books/${id}`);
+const fetchOneBook = async (id: number): Promise<BookModel> => {
+    const { data } = await booksAPI.get<BookModel>(`/books/${id}`);
     return data;
 };
 
@@ -23,7 +23,7 @@ const createBook = async (book: Partial<BookModel>): Promise<BookModel> => {
     }
 };
 
-const editBook = async (id: number, book: BookModel) => {
+const editBook = async (id: number, book: Partial<BookModel>): Promise<BookModel> => {
     const { data } = await booksAPI.put(`/books/${id}`, book);
     return data;
 };

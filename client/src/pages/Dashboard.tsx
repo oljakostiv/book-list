@@ -28,7 +28,8 @@ const Dashboard: React.FC = () => {
             <Row >
                 <List
                     items={ books }
-                    renderItem={ (book: BookModel) => <DashboardItem key={ book.id } book={ book }/>
+                    renderItem={
+                        (book: BookModel) => <DashboardItem key={ book.id } book={ book }/>
                     }
                 />
             </Row>

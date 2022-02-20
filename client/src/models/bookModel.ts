@@ -3,5 +3,5 @@ export interface BookModel {
     title: string;
     author: string;
     category: string;
-    ISBN: string;
+    isbn: string;
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container } from 'react-bootstrap';
+import { Container, Table } from 'react-bootstrap';
 
 // generic:
 interface ListProps<T> {
@@ -10,20 +10,26 @@ interface ListProps<T> {
 export default function List<T>(props: ListProps<T>) {
     return (
         <Container>
-            <table>
-                <tr
-                    style={{ color: 'grey', fontWeight: 'bold', fontSize: '18px' }}
-                >
-                    <th className='p-4'>Title:</th>
-                    <th className='p-4'>Author:</th>
-                    <th className='p-4'>Category:</th>
-                    <th className='p-4'>ISBN:</th>
-                    <th className='p-4'>Actions:</th>
-                </tr>
-                {
-                    props.items.map(props.renderItem)
-                }
-            </table>
+            <Table
+                striped bordered hover
+                className='mt-3'
+                style={{ width: '75vw' }}
+            >
+                <thead>
+                    <tr>
+                        <th>Title:</th>
+                        <th>Author:</th>
+                        <th>Category:</th>
+                        <th>ISBN:</th>
+                        <th>Actions:</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        props.items.map(props.renderItem)
+                    }
+                </tbody>
+            </Table>
         </Container>
     );
 }
