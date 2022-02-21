@@ -2,27 +2,29 @@ import React from 'react';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { AddToast, useToasts } from 'react-toast-notifications';
+import { deleteBook } from '../api/bookAPI';
 import { BookModel } from '../models/bookModel';
 import { ADD_BOOK_ROUTE } from '../utils/consts';
-import { deleteBook } from '../apis/bookAPI';
 
 interface BookItemProps {
     book: BookModel;
+    onUpdateBooks: () => void;
 }
 
-const removeBook = async (id: number, addToast: AddToast): Promise<void> => {
+const removeBook = async (id: number, addToast: AddToast, onUpdateBooks: () => void): Promise<void> => {
     try {
         // eslint-disable-next-line no-restricted-globals
         if (confirm('Do you really want to delete this book?')) {
             await deleteBook(id);
             addToast('Deleted Successfully', { appearance: 'success', autoDismiss: true });
+            onUpdateBooks();
         }
     } catch (e: any) {
-        addToast(e.response.data.message, { appearance: 'error', autoDismiss: true });
+        addToast('Failed to delete a book.', { appearance: 'error', autoDismiss: true });
     }
 };
 
-const DashboardItem: React.FC<BookItemProps> = ({ book }) => {
+const DashboardItem: React.FC<BookItemProps> = ({ book, onUpdateBooks }: BookItemProps) => {
     const { addToast } = useToasts();
     const navigate = useNavigate();
 
@@ -34,19 +36,18 @@ const DashboardItem: React.FC<BookItemProps> = ({ book }) => {
             <td>{ book.isbn }</td>
             <td>
                 <Button
-                    className='btn-sm'
-                    style={{ marginRight: 15 }}
+                    className='btn-sm mt-15'
                     onClick={ () => navigate(`${ADD_BOOK_ROUTE}?id=${book.id}`) }
                     variant={ 'success' }
                 >
-                        Edit
+                    Edit
                 </Button>
                 <Button
                     className='btn-sm'
-                    onClick={ () => removeBook(book.id, addToast) }
+                    onClick={ () => removeBook(book.id, addToast, onUpdateBooks) }
                     variant={ 'danger' }
                 >
-                        Delete
+                    Delete
                 </Button>
             </td>
         </tr>

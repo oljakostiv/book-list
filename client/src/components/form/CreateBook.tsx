@@ -3,10 +3,11 @@ import {
     Button, Card, Container, Row,
 } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
-import { createBook, editBook, fetchOneBook } from '../../apis/bookAPI';
+import { createBook, editBook, fetchOneBook } from '../../api/bookAPI';
 import { BookModel } from '../../models/bookModel';
+import { DASHBOARD_ROUTE } from '../../utils/consts';
 import './Styles.scss';
 
 const saveData = async (data: Partial<BookModel>, id: number): Promise<BookModel> => (id ? editBook(id, data) : createBook(data));
@@ -18,11 +19,20 @@ const CreateBook: React.FC = () => {
     const {
         register, handleSubmit, formState: { errors }, setValue,
     } = useForm();
+    const navigate = useNavigate();
 
     const onSubmit = async (data: Partial<BookModel>): Promise<void> => {
-        saveData(data, Number(id)).then(() => {
-            addToast('Saved Successfuly', { appearance: 'success', autoDismiss: true });
-        }).catch((e) => addToast(e.response.data.message, { appearance: 'error', autoDismiss: true }));
+        saveData(data, Number(id))
+            .then(() => addToast('Saved Successfuly', { appearance: 'success', autoDismiss: true }))
+            .catch(() => addToast('Failed to save book data, please contact support =)', { appearance: 'error', autoDismiss: true }))
+            .finally(() => navigate(DASHBOARD_ROUTE));
+    };
+
+    const onReset = (): void => {
+        setValue('title', '');
+        setValue('author', '');
+        setValue('isbn', '');
+        setValue('category', '');
     };
 
     useEffect(() => {
@@ -35,21 +45,23 @@ const CreateBook: React.FC = () => {
                 setValue('author', author);
                 setValue('isbn', isbn);
                 setValue('category', category);
-            });
+            }).catch(() => addToast('Failed to retrieve the book data', { appearance: 'error', autoDismiss: true }));
         }
     }, [id]);
 
     return (
         <Container
-            className='d-flex justify-content-center'
-            style={{ marginTop: 100, marginBottom: 200 }}
+            className='d-flex justify-content-center mt-100 mb-200'
         >
             <Card
-                className='p-4'
-                style={{ width: 600 }}
+                className='p-4 width-600'
             >
                 <h2 className='m-auto'>Book:</h2>
-                <form onSubmit={handleSubmit(onSubmit)} className='d-flex flex-column'>
+                <form
+                    onSubmit={handleSubmit(onSubmit)}
+                    onReset={onReset}
+                    className='d-flex flex-column'
+                >
                     <div className='mb-3'>
                         <label
                             htmlFor='exampleInputTitle'
@@ -65,7 +77,7 @@ const CreateBook: React.FC = () => {
                             })}
                             id='exampleInputTitle'
                         ></input>
-                        {errors?.title?.message}
+                        <small className="errorMessage">{errors?.title?.message}</small>
                     </div>
                     <div className='mb-3'>
                         <label
@@ -82,7 +94,7 @@ const CreateBook: React.FC = () => {
                                 required: 'Author is required',
                             })}
                         ></input>
-                        {errors?.author?.message}
+                        <small className="errorMessage">{errors?.author?.message}</small>
                     </div>
                     <div className='mb-3'>
                         <label
@@ -104,7 +116,7 @@ const CreateBook: React.FC = () => {
                             <option value='Thriller'>Thriller</option>
                             <option value='Sci-Fi'>Sci-Fi</option>
                         </select>
-                        {errors?.category?.message}
+                        <small className="errorMessage">{errors?.category?.message}</small>
                     </div>
                     <div className='mb-3'>
                         <label
@@ -121,23 +133,22 @@ const CreateBook: React.FC = () => {
                             })}
                             id='exampleInputISBN'
                         ></input>
-                        <span className="errorMessage">{errors?.isbn?.message}</span>
+                        <small className="errorMessage">{errors?.isbn?.message}</small>
                     </div>
                     <Row
                         className='d-flex justify-content-around mt-1'
                     >
                         <Button
                             className='w-25'
-                            variant={ 'outline-light' }
+                            variant={ 'outline-success' }
                             type="reset"
                         >
                             Reset form
                         </Button>
                         <Button
                             className='w-25'
-                            variant={ 'outline-success' }
+                            variant={ 'success' }
                             type="submit"
-                            disabled={Object.keys(errors).length > 0}
                         >
                             Save
                         </Button>
