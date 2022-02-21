@@ -1,23 +1,22 @@
-import React, {useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
-    Button, Card, Container, Dropdown, Form, Row,
+    Button, Card, Container, Row,
 } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import {useLocation, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
 import { createBook, editBook, fetchOneBook } from '../../apis/bookAPI';
 import { BookModel } from '../../models/bookModel';
-import './Modals.scss';
+import './Styles.scss';
 
-const saveData = async (data: Partial<BookModel>, id: number): Promise<BookModel> =>
-  (id ? editBook(id, data) : createBook(data));
+const saveData = async (data: Partial<BookModel>, id: number): Promise<BookModel> => (id ? editBook(id, data) : createBook(data));
 
 const CreateBook: React.FC = () => {
     const { addToast } = useToasts();
     const { search } = useLocation();
     const id = new URLSearchParams(search).get('id');
     const {
-        getValues, register, handleSubmit, formState: { errors }, setValue,
+        register, handleSubmit, formState: { errors }, setValue,
     } = useForm();
 
     const onSubmit = async (data: Partial<BookModel>): Promise<void> => {
@@ -28,14 +27,16 @@ const CreateBook: React.FC = () => {
 
     useEffect(() => {
         if (id) {
-            fetchOneBook(Number(id)).then(bookData => {
-                const { title, author, isbn, category } = bookData;
+            fetchOneBook(Number(id)).then((bookData) => {
+                const {
+                    title, author, isbn, category,
+                } = bookData;
                 setValue('title', title);
                 setValue('author', author);
                 setValue('isbn', isbn);
                 setValue('category', category);
             });
-        };
+        }
     }, [id]);
 
     return (
@@ -58,9 +59,9 @@ const CreateBook: React.FC = () => {
                         </label>
                         <input
                             type='text'
-                            className={`form-control ${ errors.title ? 'invalid' : '' }`}
+                            className={`form-control ${errors.title ? 'invalid' : ''}`}
                             {...register('title', {
-                                required: 'Title is required'
+                                required: 'Title is required',
                             })}
                             id='exampleInputTitle'
                         ></input>
@@ -75,10 +76,10 @@ const CreateBook: React.FC = () => {
                         </label>
                         <input
                             type='text'
-                            className={`form-control ${ errors.author ? 'invalid' : '' }`}
+                            className={`form-control ${errors.author ? 'invalid' : ''}`}
                             id='exampleInputAuthor'
                             {...register('author', {
-                                required: 'Author is required'
+                                required: 'Author is required',
                             })}
                         ></input>
                         {errors?.author?.message}
@@ -91,11 +92,11 @@ const CreateBook: React.FC = () => {
                             Category
                         </label>
                         <select
-                            className={`form-select ${ errors.category ? 'invalid' : '' }`}
+                            className={`form-select ${errors.category ? 'invalid' : ''}`}
                             id="category"
-                            {...register('category',{
-                                required: 'Category is required'
-                            } )}
+                            {...register('category', {
+                                required: 'Category is required',
+                            })}
                         >
                             <option value="">None</option>
                             <option value='Fantasy'>Fantasy</option>
@@ -114,9 +115,9 @@ const CreateBook: React.FC = () => {
                         </label>
                         <input
                             type='number'
-                            className={`form-control ${ errors.isbn ? 'invalid' : '' }`}
+                            className={`form-control ${errors.isbn ? 'invalid' : ''}`}
                             {...register('isbn', {
-                                required: 'ISBN is required'
+                                required: 'ISBN is required',
                             })}
                             id='exampleInputISBN'
                         ></input>

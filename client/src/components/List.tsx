@@ -1,7 +1,6 @@
 import React from 'react';
 import { Container, Table } from 'react-bootstrap';
 
-// generic:
 interface ListProps<T> {
     items: T[];
     renderItem: (item: T) => React.ReactNode;
