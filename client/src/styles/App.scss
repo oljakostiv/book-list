@@ -1,1 +1,20 @@
+$color: #565656;
 
+.mt-15 {
+  margin-right: 15px;
+}
+
+.ml-20 {
+ margin-left: 20px;
+}
+
+.width-75 {
+  width: 75vw;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: $color;
+  font-weight: bold;
+  font-size: 20px;
+}

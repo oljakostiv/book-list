@@ -12,9 +12,7 @@ const NavBar = (): React.ReactElement => {
         <Navbar bg="light" variant="light">
             <Container>
                 <NavLink
-                    style={{
-                        textDecoration: 'none', color: 'grey', fontWeight: 'bold', fontSize: '20px',
-                    }}
+                    className='nav-link'
                     to={ DASHBOARD_ROUTE }
                 >
                     Book List
@@ -27,9 +25,9 @@ const NavBar = (): React.ReactElement => {
                         Dashboard
                     </Button>
                     <Button
+                        className='ml-20'
                         onClick={ () => navigate(ADD_BOOK_ROUTE) }
                         variant={ 'outline-secondary' }
-                        style={{ marginLeft: 20 }}
                     >
                         Add a Book
                     </Button>

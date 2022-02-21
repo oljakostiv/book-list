@@ -14,13 +14,8 @@ const fetchOneBook = async (id: number): Promise<BookModel> => {
 };
 
 const createBook = async (book: Partial<BookModel>): Promise<BookModel> => {
-    try {
-        const { data } = await booksAPI.post('/books/', book);
-        return data;
-    } catch (e) {
-        console.error(e);
-        return {} as BookModel;
-    }
+    const { data } = await booksAPI.post('/books/', book);
+    return data;
 };
 
 const editBook = async (id: number, book: Partial<BookModel>): Promise<BookModel> => {

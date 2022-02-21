@@ -12,8 +12,7 @@ export default function List<T>(props: ListProps<T>): React.ReactElement {
         <Container>
             <Table
                 striped bordered hover
-                className='mt-3'
-                style={{ width: '75vw' }}
+                className='mt-3 width-75'
             >
                 <thead>
                     <tr>

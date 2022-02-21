@@ -1,46 +1,32 @@
 {
   "books": [
     {
-      "category": "Horror",
-      "title": "Devoted ",
-      "author": "Dean Koontz",
-      "isbn": "24123345686912",
+      "title": "Gold Magic by Bruce Davis",
+      "author": "Davis Bruce",
+      "category": "Fantasy",
+      "isbn": "9781938190582",
+      "id": 1
+    },
+    {
+      "title": "The Stories of Haven: I",
+      "author": "Skinner Sharon",
+      "category": "Sci-Fi",
+      "isbn": "9781938190216",
+      "id": 2
+    },
+    {
+      "title": "A Night Like This",
+      "author": "Avon Books",
+      "category": "Romance",
+      "isbn": "9780062072900",
       "id": 3
     },
     {
-      "title": "test1",
-      "author": "test1",
-      "category": "Fantasy",
-      "isbn": "12345",
+      "title": "Two Kinds of Truth: A Harry Bosch Thriller",
+      "author": "Michael Connelly",
+      "category": "Thriller",
+      "isbn": "9781409147596",
       "id": 4
-    },
-    {
-      "title": "test2",
-      "author": "test2",
-      "category": "Fantasy",
-      "isbn": "12345",
-      "id": 5
-    },
-    {
-      "title": "ddddddddd",
-      "author": "test2",
-      "category": "Fantasy",
-      "isbn": "12345",
-      "id": 6
-    },
-    {
-      "title": "test5",
-      "author": "test1",
-      "category": "Romance",
-      "isbn": "65432",
-      "id": 7
-    },
-    {
-      "title": "test5",
-      "author": "test1",
-      "category": "Romance",
-      "isbn": "65432",
-      "id": 8
     }
   ]
 }
