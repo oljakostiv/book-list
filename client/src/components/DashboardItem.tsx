@@ -10,7 +10,7 @@ interface BookItemProps {
     book: BookModel;
 }
 
-const removeBook = async (id: number, addToast: AddToast) => {
+const removeBook = async (id: number, addToast: AddToast): Promise<void> => {
     try {
         // eslint-disable-next-line no-restricted-globals
         if (confirm('Do you really want to delete this book?')) {

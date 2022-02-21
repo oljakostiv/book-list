@@ -1,9 +1,9 @@
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import axios, { AxiosInstance } from 'axios';
 import { BookModel } from '../models/bookModel';
 
 const booksAPI: AxiosInstance = axios.create({ baseURL: 'http://localhost:3000' });
 
-const fetchBooks = async () => {
+const fetchBooks = async (): Promise<BookModel[]> => {
     const { data } = await booksAPI.get<BookModel[]>('/books');
     return data;
 };
@@ -28,10 +28,7 @@ const editBook = async (id: number, book: Partial<BookModel>): Promise<BookModel
     return data;
 };
 
-const deleteBook = async (id: number): Promise<AxiosResponse<any>> => {
-    const { data } = await booksAPI.delete(`/books/${id}`);
-    return data;
-};
+const deleteBook = async (id: number): Promise<void> => booksAPI.delete(`/books/${id}`);
 
 export {
     fetchBooks, fetchOneBook, createBook, editBook, deleteBook,

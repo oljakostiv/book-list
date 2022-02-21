@@ -5,7 +5,7 @@ import NavBar from './components/NavBar';
 import AppRouter from './routes';
 import './styles/App.scss';
 
-function App() {
+function App(): React.ReactElement {
     return (
         <ToastProvider>
             <BrowserRouter>

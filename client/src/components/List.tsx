@@ -3,10 +3,11 @@ import { Container, Table } from 'react-bootstrap';
 
 interface ListProps<T> {
     items: T[];
+    // eslint-disable-next-line no-unused-vars
     renderItem: (item: T) => React.ReactNode;
 }
 
-export default function List<T>(props: ListProps<T>) {
+export default function List<T>(props: ListProps<T>): React.ReactElement {
     return (
         <Container>
             <Table

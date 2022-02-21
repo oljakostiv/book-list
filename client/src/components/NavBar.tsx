@@ -5,7 +5,7 @@ import {
 import { NavLink, useNavigate } from 'react-router-dom';
 import { ADD_BOOK_ROUTE, DASHBOARD_ROUTE } from '../utils/consts';
 
-const NavBar = () => {
+const NavBar = (): React.ReactElement => {
     const navigate = useNavigate();
 
     return (
