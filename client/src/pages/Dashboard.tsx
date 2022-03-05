@@ -2,19 +2,25 @@ import React, { useEffect, useState } from 'react';
 import {
     Container, Row, Spinner,
 } from 'react-bootstrap';
-import { fetchBooks } from '../api/bookAPI';
+import { fetchBooks, fetchCategories } from '../api/bookAPI';
 import DashboardItem from '../components/DashboardItem';
 import List from '../components/List';
-import { BookModel } from '../models/bookModel';
+import { BookListItem, BookModel } from '../models/bookModel';
+import { CategoryModel } from '../models/categoryModel';
 
 const Dashboard: React.FC = () => {
     const [books, setBooks] = useState<BookModel[]>([]);
+    const [categories, setCategories] = useState<CategoryModel[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
+    const categoryMap = new Map(categories.map((c) => [c.id, c.name]));
+    const booksList: BookListItem[] = books.map((b) => ({ ...b, category: categoryMap.get(b.category) ?? '' }));
+
     useEffect(() => {
-        fetchBooks().then((value) => {
-            setBooks(value);
-        }).finally(() => setIsLoading(false));
+        Promise.all([
+            fetchBooks().then(setBooks),
+            fetchCategories().then(setCategories),
+        ]).finally(() => setIsLoading(false));
     }, []);
 
     if (isLoading) {
@@ -35,9 +41,9 @@ const Dashboard: React.FC = () => {
         >
             <Row>
                 <List
-                    items={ books }
+                    items={booksList}
                     renderItem={
-                        (book: BookModel) => <DashboardItem key={ book.id } book={ book } onUpdateBooks={ onUpdateBooks } />
+                        (book: BookListItem) => <DashboardItem key={book.id} book={book} onUpdateBooks={onUpdateBooks}/>
                     }
                 />
             </Row>

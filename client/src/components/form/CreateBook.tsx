@@ -1,16 +1,22 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Button, Card, Container, Row,
 } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
-import { createBook, editBook, fetchOneBook } from '../../api/bookAPI';
+import {
+    createBook, editBook, fetchCategories, fetchOneBook,
+} from '../../api/bookAPI';
 import { BookModel } from '../../models/bookModel';
+import { CategoryModel } from '../../models/categoryModel';
 import { DASHBOARD_ROUTE } from '../../utils/consts';
 import './Styles.scss';
 
-const saveData = async (data: Partial<BookModel>, id: number): Promise<BookModel> => (id ? editBook(id, data) : createBook(data));
+const saveData = async (
+    data: Partial<BookModel>,
+    id: number,
+): Promise<BookModel> => (id ? editBook(id, data) : createBook(data));
 
 const CreateBook: React.FC = () => {
     const { addToast } = useToasts();
@@ -20,11 +26,16 @@ const CreateBook: React.FC = () => {
         register, handleSubmit, formState: { errors }, setValue,
     } = useForm();
     const navigate = useNavigate();
+    const [categories, setCategories] = useState<CategoryModel[]>([]);
 
     const onSubmit = async (data: Partial<BookModel>): Promise<void> => {
-        saveData(data, Number(id))
+        const body = { ...data, category: Number(data.category) };
+        saveData(body, Number(id))
             .then(() => addToast('Saved Successfuly', { appearance: 'success', autoDismiss: true }))
-            .catch(() => addToast('Failed to save book data, please contact support =)', { appearance: 'error', autoDismiss: true }))
+            .catch(() => addToast('Failed to save book data, please contact support =)', {
+                appearance: 'error',
+                autoDismiss: true,
+            }))
             .finally(() => navigate(DASHBOARD_ROUTE));
     };
 
@@ -37,15 +48,18 @@ const CreateBook: React.FC = () => {
 
     useEffect(() => {
         if (id) {
-            fetchOneBook(Number(id)).then((bookData) => {
-                const {
-                    title, author, isbn, category,
-                } = bookData;
-                setValue('title', title);
-                setValue('author', author);
-                setValue('isbn', isbn);
-                setValue('category', category);
-            }).catch(() => addToast('Failed to retrieve the book data', { appearance: 'error', autoDismiss: true }));
+            Promise.all([
+                fetchCategories().then(setCategories),
+                fetchOneBook(Number(id)).then((bookData) => {
+                    const {
+                        title, author, isbn, category,
+                    } = bookData;
+                    setValue('title', title);
+                    setValue('author', author);
+                    setValue('isbn', isbn);
+                    setValue('category', category);
+                }).catch(() => addToast('Failed to retrieve the book data', { appearance: 'error', autoDismiss: true })),
+            ]);
         }
     }, [id]);
 
@@ -111,11 +125,25 @@ const CreateBook: React.FC = () => {
                             })}
                         >
                             <option value="">None</option>
-                            <option value='Fantasy'>Fantasy</option>
-                            <option value='Romance'>Romance</option>
-                            <option value='Thriller'>Thriller</option>
-                            <option value='Sci-Fi'>Sci-Fi</option>
+                            {categories.map((c) => (
+                                <option key={c.id} value={c.id}>{c.name}</option>
+                            ))}
                         </select>
+                        {/* <Controller */}
+                        {/*    control={control} */}
+                        {/*    name="options" */}
+                        {/*    render={({ field: { onChange, value } }) => ( */}
+                        {/*        <Select */}
+                        {/*            className={errors.category ? 'invalid' : ''} */}
+                        {/*            {...register('category', { */}
+                        {/*                required: 'Category is required', */}
+                        {/*            })} */}
+                        {/*            options={ categoryOptions } */}
+                        {/*            value={categoryOptions.find((c) => c.value === value)} */}
+                        {/*            onChange={(val: CategoryOption | null) => setValue('category', val?.value)} */}
+                        {/*        /> */}
+                        {/*    )} */}
+                        {/* /> */}
                         <small className="errorMessage">{errors?.category?.message}</small>
                     </div>
                     <div className='mb-3'>
@@ -140,14 +168,14 @@ const CreateBook: React.FC = () => {
                     >
                         <Button
                             className='w-25'
-                            variant={ 'outline-success' }
+                            variant={'outline-success'}
                             type="reset"
                         >
                             Reset form
                         </Button>
                         <Button
                             className='w-25'
-                            variant={ 'success' }
+                            variant={'success'}
                             type="submit"
                         >
                             Save

@@ -3,11 +3,11 @@ import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { AddToast, useToasts } from 'react-toast-notifications';
 import { deleteBook } from '../api/bookAPI';
-import { BookModel } from '../models/bookModel';
+import { BookListItem } from '../models/bookModel';
 import { ADD_BOOK_ROUTE } from '../utils/consts';
 
 interface BookItemProps {
-    book: BookModel;
+    book: BookListItem;
     onUpdateBooks: () => void;
 }
 

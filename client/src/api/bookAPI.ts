@@ -1,5 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 import { BookModel } from '../models/bookModel';
+import { CategoryModel } from '../models/categoryModel';
 
 const booksAPI: AxiosInstance = axios.create({ baseURL: 'http://localhost:3000' });
 
@@ -25,6 +26,11 @@ const editBook = async (id: number, book: Partial<BookModel>): Promise<BookModel
 
 const deleteBook = async (id: number): Promise<void> => booksAPI.delete(`/books/${id}`);
 
+const fetchCategories = async (): Promise<CategoryModel[]> => {
+    const { data } = await booksAPI.get<CategoryModel[]>('/categories');
+    return data;
+};
+
 export {
-    fetchBooks, fetchOneBook, createBook, editBook, deleteBook,
+    fetchBooks, fetchOneBook, createBook, editBook, deleteBook, fetchCategories,
 };

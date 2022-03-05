@@ -1,30 +1,68 @@
 {
+  "categories": [
+    {
+      "id": 1,
+      "name": "Classic"
+    },
+    {
+      "id": 2,
+      "name": "Drama"
+    },
+    {
+      "id": 3,
+      "name": "Fairy Tale"
+    },
+    {
+      "id": 4,
+      "name": "Fantasy"
+    },
+    {
+      "id": 5,
+      "name": "Horror"
+    },
+    {
+      "id": 6,
+      "name": "Humor"
+    },
+    {
+      "id": 7,
+      "name": "Romance"
+    },
+    {
+      "id": 8,
+      "name": "Sci-Fi"
+    },
+    {
+      "id": 9,
+      "name": "Thriller"
+    }
+  ],
   "books": [
     {
       "title": "Gold Magic by Bruce Davis",
       "author": "Davis Bruce",
-      "category": "Fantasy",
       "isbn": "9781938190582",
+      "category": 4,
       "id": 1
     },
     {
       "title": "The Stories of Haven: I",
       "author": "Skinner Sharon",
-      "category": "Sci-Fi",
+      "category": 2,
       "isbn": "9781938190216",
       "id": 2
     },
     {
       "title": "A Night Like This",
       "author": "Avon Books",
-      "category": "Romance",
+      "category": 3,
       "isbn": "9780062072900",
       "id": 3
     },
     {
       "title": "Two Kinds of Truth: A Harry Bosch Thriller",
       "author": "Michael Connelly",
-      "category": "Thriller",
+      "category": 4,
       "isbn": "9781409147596",
       "id": 4
     }
